@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Formulir Penilaian</title>
+</head>
+
+<style>
+    .container {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color: beige;
+        }
+
+        .form-group {
+            padding: 10px;
+            margin-bottom: 10px; 
+            border-radius: 5px;
+        }
+
+        .hasil-container {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: white;
+        margin-top: 20px;
+    }
+</style>
+
+<?php
+$ar_prodi = ["SI"=> "Sistem Informasi", "TI"=> "Teknik Informatika", "BD"=> "Bisnis Digital"];
+$ar_skill = ["HTML" => 10, "CSS" => 10, "JavaScript" => 20, "RWD Bootstrap" => 20, "PHP" => 30, "Python" => 30, "Java" => 50];
+$ar_domisili = ["Jakarta", "Bogor", "Depok", "Tangerang", "Bekasi", "Lainnya"];
+
+function skor_skill($pilihan_skill, $ar_skill){
+    $skor_total = 0;
+    foreach($pilihan_skill as $skill){
+        if(isset($ar_skill[$skill])){
+            $skor_total += $ar_skill[$skill];
+        }
+    }
+    return $skor_total;
+}
+
+function kategori_skill($skor){
+    if($skor == 0){
+        return 'Tidak Memadai';
+    } elseif($skor <= 40){
+        return 'Kurang';
+    } elseif($skor <= 60){
+        return 'Cukup';
+    } elseif($skor <= 100){
+        return 'Baik';
+    } else {
+        return 'Sangat Baik';
+    }
+}
+?>
+
+
+<body>
+    <div class="container mt-4">
+        <form class="form-horizontal" method="POST" action="">
+            <fieldset>
+                <legend>Form Registrasi IT Club Data Science</legend>
+
+                <div class="form-group row">
+                    <label for="text" class="col-md-4 col-form-label">NIM</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-address-card"></i>
+                                </div>
+                            </div>
+                            <input id="text" name="nim" type="text" class="form-control" placeholder="Masukkan NIM" pattern="\d+" required>
+                        </div>
+                        <small class="form-text text-muted">Harap masukkan angka saja pada kolom NIM</small>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="text1" class="col-md-4 col-form-label">Nama Lengkap</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-address-card"></i>
+                                </div>
+                            </div>
+                            <input id="text1" name="nama" type="text" class="form-control" placeholder="Masukkan Nama Lengkap" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">Jenis Kelamin</label>
+                    <div class="col-md-8">
+                        <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="radioLaki" name="jenis_kelamin" value="Laki-laki" class="custom-control-input">
+                        <label class="custom-control-label" for="radioLaki">Laki-laki</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                        <input type="radio" id="radioPerempuan" name="jenis_kelamin" value="Perempuan" class="custom-control-input">
+                        <label class="custom-control-label" for="radioPerempuan">Perempuan</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="selectProdi" class="col-md-4 col-form-label">Program Studi</label>
+                    <div class="col-md-8">
+                        <select id="selectProdi" name="prodi" class="custom-select">
+                            <?php
+                            foreach($ar_prodi as $k => $v){
+                                echo '<option value="' . $k . '">' . $v . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">Skill Web & Programming</label>
+                    <div class="col-md-8">
+                        <?php
+                        foreach($ar_skill as $k=>$v){
+                            echo '<div class="custom-control custom-checkbox custom-control-inline">';
+                            echo '<input type="checkbox" id="skill' . $k . '" name="skill[]" value="' . $k . '" class="custom-control-input">';
+                            echo '<label class="custom-control-label" for="skill' . $k . '">' . $k . '</label>';
+                            echo '</div>';
+                        }
+                        ?>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="selectDomisili" class="col-md-4 col-form-label">Tempat Domisili</label>
+                    <div class="col-md-8">
+                        <select id="selectDomisili" name="domisili" class="custom-select">
+                            <?php
+                            foreach($ar_domisili as $tempat){
+                                echo '<option value="' . $tempat . '">' . $tempat . '</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="text2" class="col-md-4 col-form-label">Email</label>
+                    <div class="col-md-8">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-envelope"></i>
+                                </div>
+                            </div>
+                            <input id="text2" name="email" type="text" class="form-control" placeholder="Masukkan Email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="offset-md-4 col-md-8">
+                        <button name="proses" type="submit" value="simpan" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+    <?php
+    if(isset($_POST['proses'])){
+    $nim = $_POST['nim'];
+    $nama = $_POST['nama'];
+    $jenis_kelamin = isset($_POST['jenis_kelamin']) ? $_POST['jenis_kelamin'] : "";
+    $prodi = $_POST['prodi'];
+    $pilihan_skill = isset($_POST['skill']) ? $_POST['skill'] : [];
+    $domisili = $_POST['domisili'];
+    $email = $_POST['email'];
+
+    $skor_skill = !empty($pilihan_skill) ? skor_skill($pilihan_skill, $ar_skill) : 0;
+
+    $kategori_skill = kategori_skill($skor_skill);
+    
+    echo '<div class="hasil-container">';
+    echo "NIM: $nim<br>";
+    echo "Nama: $nama<br>";
+    echo "Jenis Kelamin: $jenis_kelamin<br>";
+    echo "Program Studi: $prodi<br>";
+    echo "Skor Skill: $skor_skill<br>";
+    echo "Kategori Skill: $kategori_skill<br>";
+    echo "Tempat Domisili: $domisili<br>";
+    echo "Email: $email<br>";
+}
+?>
+
+            </fieldset>
+        </form>
+    </div>
+</body>
+
+</html>
