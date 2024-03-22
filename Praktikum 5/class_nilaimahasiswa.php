@@ -1,18 +1,20 @@
 <?php
 class NilaiMahasiswa
 {
-    var $nama, $matkul, $nilai;
+    var $nim;
+    var $matkul;
+    var $nilai;
 
-    function __construct($nama, $matkul, $nilai)
+    function __construct($nim, $matkul, $nilai)
     {
-        $this->nama = $nama;
+        $this->nim = $nim;
         $this->matkul = $matkul;
         $this->nilai = $nilai;
     }
 
     function kelulusan()
     {
-        return $this->nilai <56 ? "TIDAK LULUS" : "LULUS";
+        return $this->nilai < 56 ? "TIDAK LULUS" : "LULUS";
     }
 
     function hasil()
@@ -32,3 +34,5 @@ class NilaiMahasiswa
         }
     }
 }
+
+?>
